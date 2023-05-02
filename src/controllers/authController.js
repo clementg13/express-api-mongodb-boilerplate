@@ -102,7 +102,7 @@ exports.login = async (req, res, next) => {
                                         email: user.email,
                                     };
                                     //Prepare JWT token for authentication
-                                    const jwtPayload = userData;
+                                    const jwtPayload = {user:userData};
                                     const jwtData = {
                                         expiresIn:
                                             process.env.JWT_TIMEOUT_DURATION,

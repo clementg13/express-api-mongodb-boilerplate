@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-require("dotenv").config();
+require('dotenv').config()
 const cors = require("cors");
 const mongoose = require("mongoose");
 
@@ -37,12 +37,6 @@ app.use("/api/v1", router);
 
 app.all("*", function (req, res) {
     return apiResponse.notFoundResponse(res, "Route not found");
-});
-
-app.use((err, req, res) => {
-    if (err.name == "UnauthorizedError") {
-        return apiResponse.unauthorizedResponse(res, err.message);
-    }
 });
 
 app.listen(process.env.PORT, () => {
