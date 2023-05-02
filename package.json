@@ -1,0 +1,26 @@
+{
+  "name": "api-express-challenge-housse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon — exec babel-node ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "clément grosieux",
+  "dependencies": {
+    "@babel/core": "^7.21.5",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.21.5",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-jwt": "^8.4.1",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.1.0",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22"
+  }
+}
