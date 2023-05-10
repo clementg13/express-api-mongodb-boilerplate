@@ -1,5 +1,4 @@
 const UserModel = require("../models/UserModel");
-const { body, validationResult } = require("express-validator");
 //helper file to prepare responses.
 const apiResponse = require("../helpers/apiResponse");
 const utility = require("../helpers/utility");
@@ -7,6 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailer = require("../helpers/mailer");
 const { constants } = require("../helpers/constants");
+const getMailTemplate = require("../helpers/getMailTemplate");
 
 /**
  * User registration.
@@ -32,16 +32,13 @@ exports.register = async (req, res) => {
                 password: hash,
                 confirmOTP: otp,
             });
-            // Html email body
-            let html =
-                "<p>Please Confirm your Account.</p><p>OTP: " + otp + "</p>";
             // Send confirmation email
             mailer
                 .send(
                     constants.confirmEmails.from,
                     req.body.email,
                     "Confirm Account",
-                    html
+                    getMailTemplate('confirmAccount', {otp:otp})
                 )
                 .then(async function () {
                     // Save user.
