@@ -1,9 +1,9 @@
-var express = require("express");
+const express = require("express");
 const bookController = require("../controllers/bookController");
 const bookMiddleware = require("../middlewares/routes/book/bookMiddlewares.js");
 const authenticateJWT = require("../middlewares/jwt");
 
-var router = express.Router();
+const router = express.Router();
 
 router.get("/", authenticateJWT, bookController.bookList);
 router.get("/:id", authenticateJWT, bookController.bookDetail);
