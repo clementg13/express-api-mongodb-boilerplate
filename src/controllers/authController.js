@@ -83,7 +83,7 @@ exports.register = async (req, res) => {
  */
 exports.login = async (req, res, next) => {
     try {
-        UserModel.findOne({ email: req.body.email }).then((user) => {
+        const user = await UserModel.findOne({ email: req.body.email })
             if (user) {
                 //Compare given password with db's hash.
                 bcrypt.compare(
@@ -145,7 +145,6 @@ exports.login = async (req, res, next) => {
                     "Email or Password wrong."
                 );
             }
-        });
     } catch (err) {
         return apiResponse.ErrorResponse(res, err);
     }
@@ -162,19 +161,17 @@ exports.login = async (req, res, next) => {
 exports.verifyConfirm = async (req, res) => {
     try {
         var query = { email: req.body.email };
-        UserModel.findOne(query).then((user) => {
+        const user = await UserModel.findOne(query)
             if (user) {
                 //Check already confirm or not.
                 if (!user.isConfirmed) {
                     //Check account confirmation.
                     if (user.confirmOTP == req.body.otp) {
                         //Update user as confirmed
-                        UserModel.findOneAndUpdate(query, {
+                        await UserModel.findOneAndUpdate(query, {
                             isConfirmed: 1,
                             confirmOTP: null,
-                        }).catch((err) => {
-                            return apiResponse.ErrorResponse(res, err);
-                        });
+                        })
                         return apiResponse.successResponse(
                             res,
                             "Account confirmed success."
@@ -197,7 +194,6 @@ exports.verifyConfirm = async (req, res) => {
                     "Specified email not found."
                 );
             }
-        });
     } catch (err) {
         return apiResponse.ErrorResponse(res, err);
     }
@@ -213,7 +209,7 @@ exports.verifyConfirm = async (req, res) => {
 exports.resendConfirmOtp = async (req, res, next) => {
     try {
         var query = { email: req.body.email };
-        UserModel.findOne(query).then((user) => {
+        const user = await UserModel.findOne(query)
             if (user) {
                 //Check already confirm or not.
                 if (!user.isConfirmed) {
@@ -258,7 +254,6 @@ exports.resendConfirmOtp = async (req, res, next) => {
                     "Specified email not found."
                 );
             }
-        });
     } catch (err) {
         return apiResponse.ErrorResponse(res, err);
     }
